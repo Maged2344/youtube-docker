@@ -7,7 +7,16 @@ import re
 import requests
 import os
 
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Now you can access environment variables
 APIS = os.environ['APIS'].strip('][').split(',')
+
+
 
 URL1 = 'https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&fields=items/contentDetails/videoId,nextPageToken&key={}&playlistId={}&pageToken='
 URL2 = 'https://www.googleapis.com/youtube/v3/videos?&part=contentDetails&id={}&key={}&fields=items/contentDetails/duration'
@@ -15,7 +24,7 @@ URL2 = 'https://www.googleapis.com/youtube/v3/videos?&part=contentDetails&id={}&
 
 # To get the playlistId from the link
 def get_id(playlist_link):
-    p = re.compile('^([\S]+list=)?([\w_-]+)[\S]*$')
+    p = re.compile(r'^([\S]+list=)?([\w_-]+)[\S]*$')
     m = p.match(playlist_link)
     if m:
         return m.group(2)
